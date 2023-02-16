@@ -1,0 +1,158 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Pokedex Api Documentação",
+    "description": "Documentação da api pokedex que faz consulta nos end-point.",
+    "contact": {
+      "email": "delimajonatas86@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://http://localhost:3000",
+      "description": "Server Local"
+    }
+  ],
+  "paths": {
+    "/pokemons/": {
+      "get": {
+        "summary": "pega todos os pokemons",
+        "description": "Rota responsavel por pega todos os pokemons",
+        "tags": ["Pokemons"],
+        "parameter": {
+          "- in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "number"
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "NOT FOUND"
+          },
+          "500": {
+            "description": "SERVER ERROR"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pokemon"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokemons/register": {
+      "post": {
+        "summary": "Cria novo pokemon",
+        "description": "Rota responsavel por criar um novo pokemon",
+        "tags": ["Pokemons"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pokemon"
+              }
+            },
+            "examples": {
+              "Pokemons": {
+                "value": {
+                  "_id": 1,
+                  "name": "Bulbasaur",
+                  "typePokemon": ["Grama", "Toxico"]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "SERVER ERROR"
+          },
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Pokemon"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokemons/remove/{id}": {
+      "delete": {
+        "summary": "Deleta pokemon",
+        "description": "Rota responsavel por deletar um pokemon pelo id",
+        "tags": ["Pokemons"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pokemon"
+              }
+            },
+            "examples": {
+              "Pokemons": {
+                "value": {
+                  "_id": 1,
+                  "name": "Bulbasaur",
+                  "typePokemon": ["Grama", "Toxico"]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "SERVER ERROR"
+          },
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Pokemon"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pokemon": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "typePokemon": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
